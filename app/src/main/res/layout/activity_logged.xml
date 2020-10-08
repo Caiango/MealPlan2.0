@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoggedActivity">
+    tools:context=".views.LoggedActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -139,10 +139,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imagePedidos" />
+
         <View
             android:id="@+id/viewHist"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="215dp"
             android:layout_marginTop="20dp"
             android:background="@color/colorView"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -165,8 +166,7 @@
         <ImageView
             android:id="@+id/imageHist"
             android:layout_width="255dp"
-            android:layout_height="146dp"
-            android:layout_marginTop="4dp"
+            android:layout_height="165dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txHist"

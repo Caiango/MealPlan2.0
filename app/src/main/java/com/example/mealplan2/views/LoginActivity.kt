@@ -1,8 +1,9 @@
-package com.example.mealplan2
+package com.example.mealplan2.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.mealplan2.R
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {

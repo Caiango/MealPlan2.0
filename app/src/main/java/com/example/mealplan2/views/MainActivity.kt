@@ -1,7 +1,8 @@
-package com.example.mealplan2
+package com.example.mealplan2.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.mealplan2.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
