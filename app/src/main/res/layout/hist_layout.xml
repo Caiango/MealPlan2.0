@@ -58,7 +58,7 @@
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txValorPedido" />
 
     <TextView
         android:id="@+id/txValorPedido"
@@ -66,8 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="RS 0.00"
-        android:textStyle="bold"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/txDataPedido"
         app:layout_constraintTop_toBottomOf="@+id/txTimePedido" />
 </androidx.constraintlayout.widget.ConstraintLayout>
