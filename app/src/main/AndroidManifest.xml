@@ -10,8 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_meal_plan_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".views.PedidosActivity"
+            android:theme="@style/FullScreen"></activity>
         <activity
             android:name=".views.HistoryActivity"
             android:theme="@style/FullScreen" />

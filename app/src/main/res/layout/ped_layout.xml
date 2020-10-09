@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/txDescHist"
+        android:id="@+id/txDescPed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -16,31 +16,31 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txTimeHist" />
+        app:layout_constraintTop_toBottomOf="@+id/txTimePed" />
 
     <TextView
-        android:id="@+id/txDataHist"
+        android:id="@+id/txDataPed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:text="Data"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txMesaHist" />
+        app:layout_constraintTop_toTopOf="@+id/txMesaPed" />
 
     <TextView
-        android:id="@+id/txTimeHist"
+        android:id="@+id/txTimePed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Hora"
         android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="@+id/txDataHist"
-        app:layout_constraintStart_toStartOf="@+id/txDataHist"
-        app:layout_constraintTop_toBottomOf="@+id/txDataHist" />
+        app:layout_constraintEnd_toEndOf="@+id/txDataPed"
+        app:layout_constraintStart_toStartOf="@+id/txDataPed"
+        app:layout_constraintTop_toBottomOf="@+id/txDataPed" />
 
     <TextView
-        android:id="@+id/txMesaHist"
+        android:id="@+id/txMesaPed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -59,16 +59,16 @@
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txValorHist" />
+        app:layout_constraintTop_toBottomOf="@+id/txValorPed" />
 
     <TextView
-        android:id="@+id/txValorHist"
+        android:id="@+id/txValorPed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="RS 0.00"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/txDescHist"
-        app:layout_constraintTop_toBottomOf="@+id/txDescHist" />
+        app:layout_constraintStart_toStartOf="@+id/txDescPed"
+        app:layout_constraintTop_toBottomOf="@+id/txDescPed" />
 </androidx.constraintlayout.widget.ConstraintLayout>

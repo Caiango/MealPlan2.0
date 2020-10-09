@@ -17,7 +17,8 @@ class LoggedActivity : AppCompatActivity() {
         }
 
         viewPedidos.setOnClickListener {
-            Toast.makeText(this, "Gerenciando Pedidos", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PedidosActivity::class.java)
+            startActivity(intent)
         }
 
         viewHist.setOnClickListener {
@@ -27,6 +28,11 @@ class LoggedActivity : AppCompatActivity() {
 
         viewNewLogin.setOnClickListener {
             Toast.makeText(this, "Gerenciando os Usuários", Toast.LENGTH_SHORT).show()
+        }
+
+        imageBackMan.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 }

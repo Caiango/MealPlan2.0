@@ -1,5 +1,6 @@
 package com.example.mealplan2.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,8 @@ class HistAdapter(val dataList: List<HashMap<String, String>>) :
         val data = dataList[position]
         holder.txMesa.setText("Mesa " + data["table_number"])
         holder.txDesc.setText(data["order_description"])
-        holder.txPrice.setText("RS " + data["order_price"])
+        holder.txPrice.setText("R$ " + data["order_price"])
+        holder.txPrice.setTextColor(Color.RED)
         holder.txData.setText(data["order_date"])
         holder.txTime.setText(data["order_time"])
 
@@ -31,11 +33,11 @@ class HistAdapter(val dataList: List<HashMap<String, String>>) :
     }
 
     class HolderData(v: View) : RecyclerView.ViewHolder(v) {
-        val txMesa = v.findViewById<TextView>(R.id.txMesaPedido)
-        val txDesc = v.findViewById<TextView>(R.id.txDescPedido)
-        val txData = v.findViewById<TextView>(R.id.txDataPedido)
-        val txTime = v.findViewById<TextView>(R.id.txTimePedido)
-        val txPrice = v.findViewById<TextView>(R.id.txValorPedido)
+        val txMesa = v.findViewById<TextView>(R.id.txMesaHist)
+        val txDesc = v.findViewById<TextView>(R.id.txDescHist)
+        val txData = v.findViewById<TextView>(R.id.txDataHist)
+        val txTime = v.findViewById<TextView>(R.id.txTimeHist)
+        val txPrice = v.findViewById<TextView>(R.id.txValorHist)
 
     }
 

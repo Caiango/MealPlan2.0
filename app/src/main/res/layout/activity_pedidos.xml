@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.HistoryActivity">
+    tools:context=".views.PedidosActivity">
 
     <Toolbar
         android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:title="Histórico"
+        android:title="Pedidos em Andamento"
         android:titleMarginStart="50dp"
         android:titleTextColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_hist"
+        android:id="@+id/rv_ped"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
         tools:listitem="@layout/hist_layout" />
 
     <ImageView
-        android:id="@+id/imageBackHist"
+        android:id="@+id/imageBackPed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
