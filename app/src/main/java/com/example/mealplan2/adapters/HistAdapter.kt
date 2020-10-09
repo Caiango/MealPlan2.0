@@ -7,9 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplan2.R
 
-class HistAdapter() : RecyclerView.Adapter<HistAdapter.HolderData>() {
-
-    var dataList: List<HashMap<String, String>> = ArrayList()
+class HistAdapter(val dataList: List<HashMap<String, String>>) :
+    RecyclerView.Adapter<HistAdapter.HolderData>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderData {
@@ -19,6 +18,12 @@ class HistAdapter() : RecyclerView.Adapter<HistAdapter.HolderData>() {
 
     override fun onBindViewHolder(holder: HolderData, position: Int) {
         val data = dataList[position]
+        holder.txMesa.setText("Mesa " + data["table_number"])
+        holder.txDesc.setText(data["order_description"])
+        holder.txPrice.setText("RS " + data["order_price"])
+        holder.txData.setText(data["order_date"])
+        holder.txTime.setText(data["order_time"])
+
     }
 
     override fun getItemCount(): Int {
@@ -30,6 +35,8 @@ class HistAdapter() : RecyclerView.Adapter<HistAdapter.HolderData>() {
         val txDesc = v.findViewById<TextView>(R.id.txDescPedido)
         val txData = v.findViewById<TextView>(R.id.txDataPedido)
         val txTime = v.findViewById<TextView>(R.id.txTimePedido)
+        val txPrice = v.findViewById<TextView>(R.id.txValorPedido)
 
     }
+
 }

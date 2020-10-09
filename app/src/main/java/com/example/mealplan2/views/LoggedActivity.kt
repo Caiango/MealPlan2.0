@@ -1,5 +1,6 @@
 package com.example.mealplan2.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -20,7 +21,8 @@ class LoggedActivity : AppCompatActivity() {
         }
 
         viewHist.setOnClickListener {
-            Toast.makeText(this, "Gerenciando Histórico", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
         }
 
         viewNewLogin.setOnClickListener {
