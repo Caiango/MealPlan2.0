@@ -13,7 +13,8 @@ class LoggedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_logged)
 
         viewPratos.setOnClickListener {
-            Toast.makeText(this, "Gerenciando Pratos", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PratosActivity::class.java)
+            startActivity(intent)
         }
 
         viewPedidos.setOnClickListener {

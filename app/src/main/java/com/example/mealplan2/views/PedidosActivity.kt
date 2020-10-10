@@ -72,8 +72,8 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
         dialog.setMessage(item["order_description"])
         val view = LayoutInflater.from(this).inflate(R.layout.pedido_dialog, null)
         dialog.setView(view)
-        val tarefa = view.findViewById<EditText>(R.id.edt_desc_pedido)
-        tarefa.setText(item["order_description"])
+        val desc = view.findViewById<EditText>(R.id.edt_desc_pedido)
+        desc.setText(item["order_description"])
         dialog.setPositiveButton("Alterar") { _: DialogInterface, _: Int ->
             Toast.makeText(applicationContext, "Pedido Alterado", Toast.LENGTH_LONG).show()
         }

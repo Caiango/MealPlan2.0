@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.PratosActivity"></activity>
+        <activity
+            android:name=".views.PratosActivity"
+            android:theme="@style/FullScreen" />
         <activity
             android:name=".views.PedidosActivity"
             android:theme="@style/FullScreen" />
