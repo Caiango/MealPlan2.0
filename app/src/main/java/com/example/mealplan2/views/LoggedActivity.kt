@@ -28,7 +28,8 @@ class LoggedActivity : AppCompatActivity() {
         }
 
         viewNewLogin.setOnClickListener {
-            Toast.makeText(this, "Gerenciando os Usuários", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, NewLoginActivity::class.java)
+            startActivity(intent)
         }
 
         imageBackMan.setOnClickListener {

@@ -42,4 +42,13 @@
         app:layout_constraintStart_toStartOf="@+id/edt_desc_prato"
         app:layout_constraintTop_toBottomOf="@+id/edt_desc_prato" />
 
+    <Spinner
+        android:id="@+id/spinnerFiltro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/edt_valor_prato"
+        app:layout_constraintStart_toStartOf="@+id/edt_valor_prato"
+        app:layout_constraintTop_toBottomOf="@+id/edt_valor_prato" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
