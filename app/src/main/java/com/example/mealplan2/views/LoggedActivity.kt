@@ -34,6 +34,7 @@ class LoggedActivity : AppCompatActivity() {
         imageBackMan.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            Toast.makeText(this, "Deslogar Usuário", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -25,12 +25,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="Descrição do Prato"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintEnd_toStartOf="@+id/imgPrato"
         app:layout_constraintStart_toStartOf="@+id/txPrato"
         app:layout_constraintTop_toBottomOf="@+id/txPrato" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txValorPrato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -44,11 +44,11 @@
         app:layout_constraintTop_toBottomOf="@+id/txDescPrato" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imgPrato"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintBottom_toBottomOf="@+id/txValorPrato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/txPrato"
@@ -61,7 +61,7 @@
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/txValorPrato" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
