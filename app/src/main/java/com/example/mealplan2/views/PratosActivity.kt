@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_history.*
 import kotlinx.android.synthetic.main.activity_pratos.*
 import org.json.JSONArray
 
-class PratosActivity : AppCompatActivity() {
+class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
     var getdata = mutableListOf<HashMap<String, String>>()
     var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
     lateinit var mhsAdapter: PratosAdapter
@@ -30,7 +30,7 @@ class PratosActivity : AppCompatActivity() {
 
         rv_pratos.layoutManager = LinearLayoutManager(this)
         rv_pratos.setHasFixedSize(true)
-        mhsAdapter = PratosAdapter(getdata)
+        mhsAdapter = PratosAdapter(getdata, this)
         rv_pratos.adapter = mhsAdapter
         showDataMhs()
 
@@ -45,10 +45,6 @@ class PratosActivity : AppCompatActivity() {
             dialog.setMessage("Preencha os Dados")
             val view = LayoutInflater.from(this).inflate(R.layout.pratos_dialog, null)
             dialog.setView(view)
-            val prato = view.findViewById<EditText>(R.id.edt_nome_prato)
-            val desc = view.findViewById<EditText>(R.id.edt_desc_prato)
-            val valor = view.findViewById<EditText>(R.id.edt_valor_prato)
-
             dialog.setPositiveButton("Adicionar") { _: DialogInterface, _: Int ->
                 Toast.makeText(applicationContext, "Prato Adicionado", Toast.LENGTH_LONG).show()
             }
@@ -79,5 +75,29 @@ class PratosActivity : AppCompatActivity() {
             })
         val queue = Volley.newRequestQueue(this)
         queue.add(request)
+    }
+
+    override fun onLongItemClick(item: HashMap<String, String>, position: Int) {
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Prato Selecionado:")
+        dialog.setMessage(item["food_name"])
+        val view = LayoutInflater.from(this).inflate(R.layout.pratos_dialog, null)
+        dialog.setView(view)
+        val prato = view.findViewById<EditText>(R.id.edt_nome_prato)
+        val desc = view.findViewById<EditText>(R.id.edt_desc_prato)
+        val valor = view.findViewById<EditText>(R.id.edt_valor_prato)
+        prato.setText(item["food_name"])
+        desc.setText(item["food_description"])
+        valor.setText(item["food_price"])
+        dialog.setPositiveButton("Alterar") { _: DialogInterface, _: Int ->
+            Toast.makeText(applicationContext, "Prato Alterado", Toast.LENGTH_LONG).show()
+        }
+        dialog.setNegativeButton("Excluir") { _: DialogInterface, i: Int ->
+            Toast.makeText(this, "Prato Excluído", Toast.LENGTH_SHORT).show()
+        }
+        dialog.setNeutralButton("Cancelar") { _: DialogInterface, i: Int ->
+            Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
+        }
+        dialog.show()
     }
 }

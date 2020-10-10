@@ -7,7 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplan2.R
 
-class PratosAdapter(val dataList: List<HashMap<String, String>>) :
+class PratosAdapter(
+    val dataList: List<HashMap<String, String>>,
+    var longClickListener: PratosAdapter.onLongClickListener
+) :
     RecyclerView.Adapter<PratosAdapter.HolderData>() {
 
 
@@ -22,6 +25,7 @@ class PratosAdapter(val dataList: List<HashMap<String, String>>) :
         holder.txDesc.setText(data["food_description"])
         holder.txValor.setText("R$ " + data["food_price"])
 
+        holder.initializeLong(dataList[position], longClickListener)
 
     }
 
@@ -34,7 +38,24 @@ class PratosAdapter(val dataList: List<HashMap<String, String>>) :
         val txDesc = v.findViewById<TextView>(R.id.txDescPrato)
         val txValor = v.findViewById<TextView>(R.id.txValorPrato)
 
+        fun initializeLong(
+            item: HashMap<String, String>,
+            action: onLongClickListener
+        ) {
 
+            itemView.setOnLongClickListener {
+                action.onLongItemClick(item, adapterPosition)
+                true
+            }
+
+        }
+
+    }
+
+    interface onLongClickListener {
+        fun onLongItemClick(item: HashMap<String, String>, position: Int) {
+
+        }
     }
 
 }
