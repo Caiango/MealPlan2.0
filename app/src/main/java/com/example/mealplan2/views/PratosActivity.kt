@@ -28,6 +28,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
     var url3 = "http://192.168.1.2/meal_plan2/insert_prato.php"
     var url4 = "http://192.168.1.2/meal_plan2/delete_prato.php"
     var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
+    var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
 
     var spinnerList: ArrayList<String> = ArrayList()
 
@@ -97,15 +98,24 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             Request.Method.POST, url,
             { response ->
                 getdata.clear()
-                val jsonArray = JSONArray(response)
-                for (x in 0..(jsonArray.length() - 1)) {
-                    val jsonObject = jsonArray.getJSONObject(x)
-                    var mhs = HashMap<String, String>()
-                    mhs.put("food_name", jsonObject.getString("food_name"))
-                    mhs.put("food_description", jsonObject.getString("food_description"))
-                    mhs.put("food_price", jsonObject.getString("food_price"))
-                    mhs.put("foods_id", jsonObject.getString("foods_id"))
-                    getdata.add(mhs)
+                try {
+
+                    val jsonArray = JSONArray(response)
+                    for (x in 0..(jsonArray.length() - 1)) {
+                        val jsonObject = jsonArray.getJSONObject(x)
+                        var mhs = HashMap<String, String>()
+                        mhs.put("food_name", jsonObject.getString("food_name"))
+                        mhs.put("food_description", jsonObject.getString("food_description"))
+                        mhs.put("food_price", jsonObject.getString("food_price"))
+                        mhs.put("foods_id", jsonObject.getString("foods_id"))
+                        getdata.add(mhs)
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Não há Pratos Cadastrados",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 mhsAdapter.notifyDataSetChanged()
             },
