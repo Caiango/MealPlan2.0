@@ -28,14 +28,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="@+id/viewLogin"
         app:layout_constraintStart_toStartOf="@+id/viewLogin"
-        app:layout_constraintTop_toTopOf="@+id/viewLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/txLogin" />
 
     <EditText
         android:id="@+id/password"
@@ -72,12 +72,12 @@
         android:id="@+id/txLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="LOGIN"
-        android:translationZ="99dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        android:translationZ="99dp"
         app:layout_constraintEnd_toEndOf="@+id/viewLogin"
         app:layout_constraintStart_toStartOf="@+id/viewLogin"
         app:layout_constraintTop_toTopOf="@+id/viewLogin" />
