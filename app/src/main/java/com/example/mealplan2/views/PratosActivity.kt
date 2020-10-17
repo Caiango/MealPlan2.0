@@ -59,6 +59,13 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             startActivity(intent)
         }
 
+        imageCat.setOnClickListener {
+            val textSpinner = spinnerPrato.selectedItem.toString()
+            if (textSpinner.isNotEmpty()) {
+                getPratosByCat(textSpinner)
+            }
+        }
+
         floatingAddPrato.setOnClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("Adicionar Prato")
@@ -175,12 +182,14 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
         val request = StringRequest(
             Request.Method.POST, url2,
             { response ->
+                getdata.clear()
                 val jsonArray = JSONArray(response)
                 for (x in 0..(jsonArray.length() - 1)) {
                     val jsonObject = jsonArray.getJSONObject(x)
 
                     //adicionando as categorias obtidas no banco dentro de uma lista
                     spinnerList.add(jsonObject.getString("category_name"))
+
 
                 }
                 //criando variável adapter que vai receber os dados da lista
@@ -279,6 +288,38 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                 hm.put("food_name", nome)
                 hm.put("food_description", desc)
                 hm.put("food_price", valor)
+                return hm
+            }
+        }
+        val queue = Volley.newRequestQueue(this)
+        queue.add(request)
+    }
+
+    fun getPratosByCat(cat: String) {
+        val request = object : StringRequest(Method.POST, url6,
+            Response.Listener { response ->
+                getdata.clear()
+
+                val jsonArray = JSONArray(response)
+                for (x in 0..(jsonArray.length() - 1)) {
+                    val jsonObject = jsonArray.getJSONObject(x)
+                    var mhs = HashMap<String, String>()
+                    mhs.put("food_name", jsonObject.getString("food_name"))
+                    mhs.put("food_description", jsonObject.getString("food_description"))
+                    mhs.put("food_price", jsonObject.getString("food_price"))
+                    mhs.put("foods_id", jsonObject.getString("foods_id"))
+                    getdata.add(mhs)
+                }
+                mhsAdapter.notifyDataSetChanged()
+
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
+            }) {
+            override fun getParams(): MutableMap<String, String> {
+                val hm = HashMap<String, String>()
+                //recebendo e enviando valores para o php
+                hm["category_name"] = cat
                 return hm
             }
         }
