@@ -63,6 +63,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             val textSpinner = spinnerPrato.selectedItem.toString()
             if (textSpinner.isNotEmpty()) {
                 getPratosByCat(textSpinner)
+                txCatName.text = textSpinner
             }
         }
 
@@ -75,6 +76,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             val prato = view.findViewById<EditText>(R.id.edt_nome_prato)
             val desc = view.findViewById<EditText>(R.id.edt_desc_prato)
             val valor = view.findViewById<EditText>(R.id.edt_valor_prato)
+            val cat = view.findViewById<Spinner>(R.id.spinnerFiltro)
 
             //setando spinner
             var spinner = view.findViewById<Spinner>(R.id.spinnerFiltro)
@@ -90,7 +92,9 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                 insertFood(
                     prato.text.toString().trim(),
                     desc.text.toString().trim(),
-                    valor.text.toString().trim()
+                    valor.text.toString().trim(),
+                    cat.selectedItem.toString()
+
                 )
             }
             dialog.setNegativeButton("Cancelar") { _: DialogInterface, i: Int ->
@@ -106,7 +110,6 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             { response ->
                 getdata.clear()
                 try {
-
                     val jsonArray = JSONArray(response)
                     for (x in 0..(jsonArray.length() - 1)) {
                         val jsonObject = jsonArray.getJSONObject(x)
@@ -116,6 +119,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                         mhs.put("food_price", jsonObject.getString("food_price"))
                         mhs.put("foods_id", jsonObject.getString("foods_id"))
                         getdata.add(mhs)
+                        mhsAdapter.notifyDataSetChanged()
                     }
                 } catch (e: Exception) {
                     Toast.makeText(
@@ -209,7 +213,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
         queue.add(request)
     }
 
-    fun insertFood(nome: String, desc: String, valor: String) {
+    fun insertFood(nome: String, desc: String, valor: String, cat: String) {
         val request = object : StringRequest(Method.POST, url3,
             Response.Listener { response ->
                 val jsonObject = JSONObject(response)
@@ -227,6 +231,15 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             }) {
             override fun getParams(): MutableMap<String, String> {
                 val hm = HashMap<String, String>()
+                val textSpinner = spinnerPrato.selectedItem.toString()
+                if (cat == "Prato Principal") {
+                    hm.put("category_id", "1")
+                } else if (cat == "Petiscos") {
+                    hm.put("category_id", "2")
+                } else if (cat == "Bebidas") {
+                    hm.put("category_id", "3")
+                }
+
                 //recebendo e enviando valores para o php
                 hm.put("food_name", nome)
                 hm.put("food_description", desc)
