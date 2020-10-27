@@ -12,19 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.NewLoginActivity"></activity>
+        <activity
+            android:name=".views.NewLoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen" />
         <activity
             android:name=".views.PratosActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/FullScreen" />
         <activity
             android:name=".views.PedidosActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/FullScreen" />
         <activity
             android:name=".views.HistoryActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/FullScreen" />
-        <activity android:name=".views.LoggedActivity" />
+        <activity
+            android:name=".views.LoggedActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +41,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.MainActivity" />
+        <activity
+            android:name=".views.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -2,27 +2,28 @@ package com.example.mealplan2.views
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.mealplan2.R
-import com.example.mealplan2.adapters.HistAdapter
 import com.example.mealplan2.adapters.PratosAdapter
-import kotlinx.android.synthetic.main.activity_history.*
 import kotlinx.android.synthetic.main.activity_pratos.*
-import kotlinx.android.synthetic.main.pratos_dialog.*
 import org.json.JSONArray
 import org.json.JSONObject
 
 class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
     var getdata = mutableListOf<HashMap<String, String>>()
+
     var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
     var url2 = "http://192.168.1.2/meal_plan2/get_categories.php"
     var url3 = "http://192.168.1.2/meal_plan2/insert_prato.php"
