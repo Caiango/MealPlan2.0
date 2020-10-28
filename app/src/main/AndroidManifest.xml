@@ -30,7 +30,8 @@
             android:theme="@style/FullScreen" />
         <activity
             android:name=".views.LoggedActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen" />
         <activity
             android:name=".views.LoginActivity"
             android:screenOrientation="portrait"

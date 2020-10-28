@@ -92,20 +92,47 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
         desc.setText(item["order_description"])
         dialog.setPositiveButton("Alterar") { _: DialogInterface, _: Int ->
             if (id != null) {
-                updateOrder(
-                    id,
-                    desc.text.toString().trim()
-                )
+                if (LoginActivity.currentPrivilege == "Cozinha") {
+                    Toast.makeText(
+                        applicationContext,
+                        "Você não tem permissão de acesso!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    updateOrder(
+                        id,
+                        desc.text.toString().trim()
+                    )
+                }
+
             }
         }
         dialog.setNegativeButton("Excluir") { _: DialogInterface, i: Int ->
             if (id != null) {
-                deleteOrder(id)
+                if (LoginActivity.currentPrivilege == "Atendimento" || LoginActivity.currentPrivilege == "Cozinha") {
+                    Toast.makeText(
+                        applicationContext,
+                        "Você não tem permissão de acesso!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    deleteOrder(id)
+                }
+
             }
         }
         dialog.setNeutralButton("Finalizar") { _: DialogInterface, i: Int ->
             if (id != null) {
-                finishOrder(id)
+                if (LoginActivity.currentPrivilege == "Atendimento") {
+                    Toast.makeText(
+                        applicationContext,
+                        "Você não tem permissão de acesso!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    finishOrder(id)
+                }
+
             }
         }
         dialog.show()

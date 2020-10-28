@@ -34,16 +34,25 @@ class HistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_history)
 
         floatDelHist.setOnClickListener {
-            val dialog = AlertDialog.Builder(this)
-            dialog.setTitle("Deseja Limpar o Histórico?")
-            dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->
-                deleteHist()
-            }
-            dialog.setNegativeButton("Cancelar") { _: DialogInterface, i: Int ->
+            if (LoginActivity.currentPrivilege == "Administração") {
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle("Deseja Limpar o Histórico?")
+                dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->
+                    deleteHist()
+                }
+                dialog.setNegativeButton("Cancelar") { _: DialogInterface, i: Int ->
 
-                Toast.makeText(applicationContext, "Cancelado", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Cancelado", Toast.LENGTH_LONG).show()
+                }
+                dialog.show()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "Você não tem permissão de acesso!",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-            dialog.show()
+
         }
 
         rv_hist.layoutManager = LinearLayoutManager(this)
