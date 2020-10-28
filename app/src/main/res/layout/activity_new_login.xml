@@ -33,10 +33,10 @@
         android:id="@+id/edtNewUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Usuário"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:hint="Senha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,19 +66,19 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="Privilégio"
         app:layout_constraintEnd_toEndOf="@+id/edtNewPass"
         app:layout_constraintStart_toStartOf="@+id/edtNewPass"
-        app:layout_constraintTop_toBottomOf="@+id/edtNewPass" />
+        app:layout_constraintTop_toBottomOf="@+id/edtCPF" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="CRIAR NOVO USUÁRIO"
+        android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-medium"
+        android:text="CRIAR NOVO USUÁRIO"
         android:textColor="@color/colorPrimary"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -87,28 +87,43 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_main" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rvNewUsers"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newUser" />
+        app:layout_constraintTop_toBottomOf="@+id/newUser"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/all_users_layout" />
 
     <Button
         android:id="@+id/newUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/button_back"
         android:text="CRIAR"
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newSpinner" />
+
+    <EditText
+        android:id="@+id/edtCPF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="CPF"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtNewPass" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

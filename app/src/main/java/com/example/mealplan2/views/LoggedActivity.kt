@@ -12,6 +12,9 @@ class LoggedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logged)
 
+        Toast.makeText(applicationContext, "Olá!" + " " + LoginActivity.currentUser, Toast.LENGTH_LONG)
+            .show()
+
         viewPratos.setOnClickListener {
             val intent = Intent(this, PratosActivity::class.java)
             startActivity(intent)
@@ -35,7 +38,8 @@ class LoggedActivity : AppCompatActivity() {
         imageBackMan.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            Toast.makeText(this, "Deslogar Usuário", Toast.LENGTH_SHORT).show()
+            LoginActivity.currentUser = ""
+            Toast.makeText(this, "Você Saiu!", Toast.LENGTH_SHORT).show()
         }
     }
 }
