@@ -12,7 +12,7 @@ class LoggedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logged)
 
-        Toast.makeText(applicationContext, "Olá!" + " " + LoginActivity.currentUser, Toast.LENGTH_LONG)
+        Toast.makeText(applicationContext, "Olá!" + " " + LoginActivity.currentUser + " / " + LoginActivity.currentPrivilege, Toast.LENGTH_LONG)
             .show()
 
         viewPratos.setOnClickListener {
@@ -39,6 +39,7 @@ class LoggedActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             LoginActivity.currentUser = ""
+            LoginActivity.currentPrivilege = ""
             Toast.makeText(this, "Você Saiu!", Toast.LENGTH_SHORT).show()
         }
     }

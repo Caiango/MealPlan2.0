@@ -17,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         var currentUser: String = ""
+        var currentPrivilege: String = ""
     }
 
     var url = "http://192.168.1.2/meal_plan2/get_current_user.php"
@@ -52,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
 
                         currentUser = jsonObject.getString("user_name")
                         currentCPF = jsonObject.getString("user_cpf")
+                        currentPrivilege = jsonObject.getString("role_name")
 
                     }
 
