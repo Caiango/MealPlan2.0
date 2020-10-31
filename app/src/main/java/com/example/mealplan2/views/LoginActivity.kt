@@ -18,9 +18,13 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         var currentUser: String = ""
         var currentPrivilege: String = ""
+        private var currentPass: String = ""
     }
 
-    var url = "http://192.168.1.2/meal_plan2/get_current_user.php"
+    var url = "http://192.168.0.22/php_android/get_current_user.php"
+
+//    var url = "http://192.168.1.2/meal_plan2/get_current_user.php"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
 
                 getData(cpf, pass)
             }
-
         }
 
     }
@@ -54,15 +57,16 @@ class LoginActivity : AppCompatActivity() {
                         currentUser = jsonObject.getString("user_name")
                         currentCPF = jsonObject.getString("user_cpf")
                         currentPrivilege = jsonObject.getString("role_name")
+                        currentPass = jsonObject.getString("user_password")
 
                     }
 
-                    if (cpf == currentCPF) {
+                    if (cpf == currentCPF && pass == currentPass) {
                         val intent = Intent(this, LoggedActivity::class.java)
                         startActivity(intent)
                     } else {
 
-                        Toast.makeText(applicationContext, "Não é igual", Toast.LENGTH_LONG)
+                        Toast.makeText(applicationContext, "Usuário ou Senha Incorretos", Toast.LENGTH_LONG)
                             .show()
                     }
 

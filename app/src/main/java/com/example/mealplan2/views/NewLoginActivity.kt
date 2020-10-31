@@ -25,9 +25,14 @@ import org.json.JSONObject
 class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListener {
 
     var getdata = mutableListOf<HashMap<String, String>>()
-    var url = "http://192.168.1.2/meal_plan2/get_all_users.php"
-    var url2 = "http://192.168.1.2/meal_plan2/insert_user.php"
-    var url3 = "http://192.168.1.2/meal_plan2/delete_user.php"
+    var url = "http://192.168.0.22/php_android/get_all_users.php"
+    var url2 = "http://192.168.0.22/php_android/insert_user.php"
+    var url3 = "http://192.168.0.22/php_android/delete_user.php"
+
+//    var url = "http://192.168.1.2/meal_plan2/get_all_users.php"
+//    var url2 = "http://192.168.1.2/meal_plan2/insert_user.php"
+//    var url3 = "http://192.168.1.2/meal_plan2/delete_user.php"
+
     lateinit var mhsAdapter: NewLoginAdapter
 
     var privilegesList: ArrayList<String> = ArrayList()

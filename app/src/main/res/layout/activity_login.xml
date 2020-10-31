@@ -33,6 +33,7 @@
         android:hint="CPF (12345678901)"
         android:inputType="numberDecimal"
         android:selectAllOnFocus="true"
+        android:translationZ="99dp"
         app:layout_constraintEnd_toEndOf="@+id/viewLogin"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/viewLogin"

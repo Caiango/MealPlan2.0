@@ -25,8 +25,12 @@ import java.lang.Exception
 class HistoryActivity : AppCompatActivity() {
 
     var getdata = mutableListOf<HashMap<String, String>>()
-    var url = "http://192.168.1.2/meal_plan2/show_history.php"
-    var url2 = "http://192.168.1.2/meal_plan2/delete_all_hist.php"
+    var url = "http://192.168.0.22/php_android/show_history.php"
+    var url2 = "http://192.168.0.22/php_android/delete_all_hist.php"
+
+//    var url = "http://192.168.1.2/meal_plan2/show_history.php"
+//    var url2 = "http://192.168.1.2/meal_plan2/delete_all_hist.php"
+
     lateinit var mhsAdapter: HistAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -23,13 +23,20 @@ import org.json.JSONObject
 
 class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
     var getdata = mutableListOf<HashMap<String, String>>()
+    var url = "http://192.168.0.22/php_android/show_pratos.php"
+    var url2 = "http://192.168.0.22/php_android/get_categories.php"
+    var url3 = "http://192.168.0.22/php_android/insert_prato.php"
+    var url4 = "http://192.168.0.22/php_android/delete_prato.php"
+    var url5 = "http://192.168.0.22/php_android/update_prato.php"
+    var url6 = "http://192.168.0.22/php_android/select_by_category.php"
 
-    var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
-    var url2 = "http://192.168.1.2/meal_plan2/get_categories.php"
-    var url3 = "http://192.168.1.2/meal_plan2/insert_prato.php"
-    var url4 = "http://192.168.1.2/meal_plan2/delete_prato.php"
-    var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
-    var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
+//    var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
+//    var url2 = "http://192.168.1.2/meal_plan2/get_categories.php"
+//    var url3 = "http://192.168.1.2/meal_plan2/insert_prato.php"
+//    var url4 = "http://192.168.1.2/meal_plan2/delete_prato.php"
+//    var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
+//    var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
+
 
     var spinnerList: ArrayList<String> = ArrayList()
 
@@ -77,7 +84,6 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             val prato = view.findViewById<EditText>(R.id.edt_nome_prato)
             val desc = view.findViewById<EditText>(R.id.edt_desc_prato)
             val valor = view.findViewById<EditText>(R.id.edt_valor_prato)
-            val cat = view.findViewById<Spinner>(R.id.spinnerFiltro)
 
             //setando spinner
             var spinner = view.findViewById<Spinner>(R.id.spinnerFiltro)
@@ -94,7 +100,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                     prato.text.toString().trim(),
                     desc.text.toString().trim(),
                     valor.text.toString().trim(),
-                    cat.selectedItem.toString()
+                    spinner.selectedItem.toString()
 
                 )
             }
@@ -118,7 +124,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                         mhs.put("food_name", jsonObject.getString("food_name"))
                         mhs.put("food_description", jsonObject.getString("food_description"))
                         mhs.put("food_price", jsonObject.getString("food_price"))
-                        mhs.put("foods_id", jsonObject.getString("foods_id"))
+                        mhs.put("food_id", jsonObject.getString("food_id"))
                         getdata.add(mhs)
                         mhsAdapter.notifyDataSetChanged()
                     }
@@ -147,15 +153,16 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
         val prato = view.findViewById<EditText>(R.id.edt_nome_prato)
         val desc = view.findViewById<EditText>(R.id.edt_desc_prato)
         val valor = view.findViewById<EditText>(R.id.edt_valor_prato)
-        var id = item["foods_id"]
+        var id = item["food_id"]
 
         //setando spinner
-        var spinner = view.findViewById<Spinner>(R.id.spinnerFiltro)
+        var spinnerUpdate = view.findViewById<Spinner>(R.id.spinnerFiltro)
         var adapterSpinner: ArrayAdapter<String> = ArrayAdapter(
             this, android.R.layout.simple_spinner_item, spinnerList
         )
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapterSpinner
+        spinnerUpdate.adapter = adapterSpinner
+
 
         prato.setText(item["food_name"])
         desc.setText(item["food_description"])
@@ -165,8 +172,9 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                 updateFood(
                     id, prato.text.toString().trim(),
                     desc.text.toString().trim(),
-                    valor.text.toString().trim()
-                )
+                    valor.text.toString().trim(),
+                    spinnerUpdate.selectedItem.toString()
+                    )
             }
 
         }
@@ -232,13 +240,15 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             }) {
             override fun getParams(): MutableMap<String, String> {
                 val hm = HashMap<String, String>()
-                val textSpinner = spinnerPrato.selectedItem.toString()
-                if (cat == "Prato Principal") {
+
+                if (cat == "Almoço") {
                     hm.put("category_id", "1")
-                } else if (cat == "Petiscos") {
+                } else if (cat == "Lanche") {
                     hm.put("category_id", "2")
-                } else if (cat == "Bebidas") {
+                } else if (cat == "Jantar") {
                     hm.put("category_id", "3")
+                } else if (cat == "Sobremesa") {
+                    hm.put("category_id", "4")
                 }
 
                 //recebendo e enviando valores para o php
@@ -279,13 +289,14 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
         queue.add(request)
     }
 
-    fun updateFood(id: String, nome: String, desc: String, valor: String) {
+    fun updateFood(id: String, nome: String, desc: String, valor: String, cat: String) {
         val request = object : StringRequest(Method.POST, url5,
             Response.Listener { response ->
                 val jsonObject = JSONObject(response)
                 val error = jsonObject.getString("kode")
                 if (error.equals("000")) {
                     Toast.makeText(applicationContext, "Prato Alterado", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, cat, Toast.LENGTH_LONG).show()
                     showDataMhs()
                     mhsAdapter.notifyDataSetChanged()
                 } else {
@@ -297,11 +308,26 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             }) {
             override fun getParams(): MutableMap<String, String> {
                 val hm = HashMap<String, String>()
+
                 //recebendo e enviando valores para o php
                 hm["foods_id"] = id
                 hm.put("food_name", nome)
                 hm.put("food_description", desc)
                 hm.put("food_price", valor)
+
+                if (cat == "Almoço") {
+                    hm.put("cat_id", "1")
+
+                } else if (cat == "Lanche") {
+                    hm.put("cat_id", "2")
+
+                } else if (cat == "Jantar") {
+                    hm.put("cat_id", "3")
+
+                } else if (cat == "Sobremesa") {
+                    hm.put("cat_id", "4")
+
+                }
                 return hm
             }
         }
@@ -321,7 +347,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                     mhs.put("food_name", jsonObject.getString("food_name"))
                     mhs.put("food_description", jsonObject.getString("food_description"))
                     mhs.put("food_price", jsonObject.getString("food_price"))
-                    mhs.put("foods_id", jsonObject.getString("foods_id"))
+                    mhs.put("food_id", jsonObject.getString("food_id"))
                     getdata.add(mhs)
                 }
                 mhsAdapter.notifyDataSetChanged()
