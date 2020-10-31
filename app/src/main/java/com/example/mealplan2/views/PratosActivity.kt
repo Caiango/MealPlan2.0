@@ -23,19 +23,19 @@ import org.json.JSONObject
 
 class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
     var getdata = mutableListOf<HashMap<String, String>>()
-    var url = "http://192.168.0.22/php_android/show_pratos.php"
-    var url2 = "http://192.168.0.22/php_android/get_categories.php"
-    var url3 = "http://192.168.0.22/php_android/insert_prato.php"
-    var url4 = "http://192.168.0.22/php_android/delete_prato.php"
-    var url5 = "http://192.168.0.22/php_android/update_prato.php"
-    var url6 = "http://192.168.0.22/php_android/select_by_category.php"
+//    var url = "http://192.168.0.22/php_android/show_pratos.php"
+//    var url2 = "http://192.168.0.22/php_android/get_categories.php"
+//    var url3 = "http://192.168.0.22/php_android/insert_prato.php"
+//    var url4 = "http://192.168.0.22/php_android/delete_prato.php"
+//    var url5 = "http://192.168.0.22/php_android/update_prato.php"
+//    var url6 = "http://192.168.0.22/php_android/select_by_category.php"
 
-//    var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
-//    var url2 = "http://192.168.1.2/meal_plan2/get_categories.php"
-//    var url3 = "http://192.168.1.2/meal_plan2/insert_prato.php"
-//    var url4 = "http://192.168.1.2/meal_plan2/delete_prato.php"
-//    var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
-//    var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
+    var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
+    var url2 = "http://192.168.1.2/meal_plan2/get_categories.php"
+    var url3 = "http://192.168.1.2/meal_plan2/insert_prato.php"
+    var url4 = "http://192.168.1.2/meal_plan2/delete_prato.php"
+    var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
+    var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
 
 
     var spinnerList: ArrayList<String> = ArrayList()
@@ -174,7 +174,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                     desc.text.toString().trim(),
                     valor.text.toString().trim(),
                     spinnerUpdate.selectedItem.toString()
-                    )
+                )
             }
 
         }
@@ -281,7 +281,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             override fun getParams(): MutableMap<String, String> {
                 val hm = HashMap<String, String>()
                 //recebendo e enviando valores para o php
-                hm["foods_id"] = id
+                hm["food_id"] = id
                 return hm
             }
         }
@@ -296,7 +296,6 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                 val error = jsonObject.getString("kode")
                 if (error.equals("000")) {
                     Toast.makeText(applicationContext, "Prato Alterado", Toast.LENGTH_LONG).show()
-                    Toast.makeText(applicationContext, cat, Toast.LENGTH_LONG).show()
                     showDataMhs()
                     mhsAdapter.notifyDataSetChanged()
                 } else {
@@ -310,7 +309,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                 val hm = HashMap<String, String>()
 
                 //recebendo e enviando valores para o php
-                hm["foods_id"] = id
+                hm["food_id"] = id
                 hm.put("food_name", nome)
                 hm.put("food_description", desc)
                 hm.put("food_price", valor)

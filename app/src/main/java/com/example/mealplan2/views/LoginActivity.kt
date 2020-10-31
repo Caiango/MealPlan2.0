@@ -21,9 +21,9 @@ class LoginActivity : AppCompatActivity() {
         private var currentPass: String = ""
     }
 
-    var url = "http://192.168.0.22/php_android/get_current_user.php"
+//    var url = "http://192.168.0.22/php_android/get_current_user.php"
 
-//    var url = "http://192.168.1.2/meal_plan2/get_current_user.php"
+    var url = "http://192.168.1.2/meal_plan2/get_current_user.php"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
