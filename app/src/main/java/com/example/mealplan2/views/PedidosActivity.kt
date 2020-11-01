@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.mealplan2.R
 import com.example.mealplan2.adapters.PedidosAdapter
+import com.example.mealplan2.controller.LoginController
 import kotlinx.android.synthetic.main.activity_pedidos.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -99,7 +100,7 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
         desc.setText(item["order_description"])
         dialog.setPositiveButton("Alterar") { _: DialogInterface, _: Int ->
             if (id != null) {
-                if (LoginActivity.currentPrivilege == "Cozinha") {
+                if (LoginController.currentPrivilege == "Cozinha") {
                     Toast.makeText(
                         applicationContext,
                         "Você não tem permissão de acesso!",
@@ -116,7 +117,7 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
         }
         dialog.setNegativeButton("Excluir") { _: DialogInterface, i: Int ->
             if (id != null) {
-                if (LoginActivity.currentPrivilege == "Atendimento" || LoginActivity.currentPrivilege == "Cozinha") {
+                if (LoginController.currentPrivilege == "Atendimento" || LoginController.currentPrivilege == "Cozinha") {
                     Toast.makeText(
                         applicationContext,
                         "Você não tem permissão de acesso!",
@@ -130,7 +131,7 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
         }
         dialog.setNeutralButton("Finalizar") { _: DialogInterface, i: Int ->
             if (id != null) {
-                if (LoginActivity.currentPrivilege == "Atendimento") {
+                if (LoginController.currentPrivilege == "Atendimento") {
                     Toast.makeText(
                         applicationContext,
                         "Você não tem permissão de acesso!",

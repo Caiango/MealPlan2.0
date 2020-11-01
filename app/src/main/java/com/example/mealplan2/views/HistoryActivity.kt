@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.mealplan2.R
 import com.example.mealplan2.adapters.HistAdapter
+import com.example.mealplan2.controller.LoginController
 import kotlinx.android.synthetic.main.activity_history.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -38,7 +39,7 @@ class HistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_history)
 
         floatDelHist.setOnClickListener {
-            if (LoginActivity.currentPrivilege == "Administração") {
+            if (LoginController.currentPrivilege == "Administração") {
                 val dialog = AlertDialog.Builder(this)
                 dialog.setTitle("Deseja Limpar o Histórico?")
                 dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->

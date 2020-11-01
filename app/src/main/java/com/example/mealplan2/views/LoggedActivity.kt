@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mealplan2.R
+import com.example.mealplan2.controller.LoginController
 import kotlinx.android.synthetic.main.activity_logged.*
 
 class LoggedActivity : AppCompatActivity() {
@@ -12,9 +13,9 @@ class LoggedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logged)
 
-        logged_tolbar.title = LoginActivity.currentUser + " | " + LoginActivity.currentPrivilege
+        logged_tolbar.title = LoginController.currentUser + " | " + LoginController.currentPrivilege
 
-        if (LoginActivity.currentPrivilege == "Atendimento") {
+        if (LoginController.currentPrivilege == "Atendimento") {
             viewPratos.setOnClickListener {
                 Toast.makeText(
                     applicationContext,
@@ -40,7 +41,7 @@ class LoggedActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-        } else if (LoginActivity.currentPrivilege == "Cozinha") {
+        } else if (LoginController.currentPrivilege == "Cozinha") {
             viewPratos.setOnClickListener {
                 Toast.makeText(
                     applicationContext,
@@ -93,8 +94,8 @@ class LoggedActivity : AppCompatActivity() {
         imageBackMan.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            LoginActivity.currentUser = ""
-            LoginActivity.currentPrivilege = ""
+            LoginController.currentUser = ""
+            LoginController.currentPrivilege = ""
             Toast.makeText(this, "Você Saiu!", Toast.LENGTH_SHORT).show()
         }
     }
