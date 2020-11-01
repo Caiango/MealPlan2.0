@@ -9,83 +9,34 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.mealplan2.R
 import com.example.mealplan2.adapters.PedidosAdapter
 import com.example.mealplan2.controller.LoginController
+import com.example.mealplan2.controller.PedidosController
 import kotlinx.android.synthetic.main.activity_pedidos.*
-import org.json.JSONArray
-import org.json.JSONObject
 
 class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener {
 
-    var getdata = mutableListOf<HashMap<String, String>>()
-//    var url = "http://192.168.0.22/php_android/show_orders.php"
-//    var url2 = "http://192.168.0.22/php_android/delete_order.php"
-//    var url3 = "http://192.168.0.22/php_android/update_order.php"
-//    var url4 = "http://192.168.0.22/php_android/finish_order.php"
-
-    var url = "http://192.168.1.2/meal_plan2/show_orders.php"
-    var url2 = "http://192.168.1.2/meal_plan2/delete_order.php"
-    var url3 = "http://192.168.1.2/meal_plan2/update_order.php"
-    var url4 = "http://192.168.1.2/meal_plan2/finish_order.php"
-
-
     lateinit var mhsAdapter: PedidosAdapter
+    lateinit var mPedidosController: PedidosController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pedidos)
 
+        mPedidosController = PedidosController()
+
         rv_ped.layoutManager = LinearLayoutManager(this)
         rv_ped.setHasFixedSize(true)
-        mhsAdapter = PedidosAdapter(getdata, this)
+        mhsAdapter = PedidosAdapter(PedidosController.getdata, this)
         rv_ped.adapter = mhsAdapter
-        showDataMhs()
+
+        mPedidosController.showDataMhs(this, mhsAdapter)
 
         imageBackPed.setOnClickListener {
             val intent = Intent(this, LoggedActivity::class.java)
             startActivity(intent)
         }
-
-    }
-
-    fun showDataMhs() {
-        val request = StringRequest(
-            Request.Method.POST, url,
-            { response ->
-                getdata.clear()
-                try {
-                    val jsonArray = JSONArray(response)
-
-                    for (x in 0..(jsonArray.length() - 1)) {
-                        val jsonObject = jsonArray.getJSONObject(x)
-                        var mhs = HashMap<String, String>()
-                        mhs.put("table_number", jsonObject.getString("table_number"))
-                        mhs.put("order_description", jsonObject.getString("order_description"))
-                        mhs.put("order_price", jsonObject.getString("order_price"))
-                        mhs.put("order_date", jsonObject.getString("order_date"))
-                        mhs.put("order_time", jsonObject.getString("order_time"))
-                        mhs.put("order_id", jsonObject.getString("order_id"))
-                        getdata.add(mhs)
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(
-                        applicationContext,
-                        "Não há pedidos em Andamento",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                mhsAdapter.notifyDataSetChanged()
-            },
-            { error ->
-                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
-            })
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
 
     }
 
@@ -107,9 +58,11 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    updateOrder(
+                    mPedidosController.updateOrder(
                         id,
-                        desc.text.toString().trim()
+                        desc.text.toString().trim(),
+                        this,
+                        mhsAdapter
                     )
                 }
 
@@ -124,7 +77,7 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    deleteOrder(id)
+                    mPedidosController.deleteOrder(id, this, mhsAdapter)
                 }
 
             }
@@ -138,96 +91,13 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    finishOrder(id)
+                    mPedidosController.finishOrder(id, this, mhsAdapter)
                 }
 
             }
         }
         dialog.show()
 
-    }
-
-    fun deleteOrder(id: String) {
-        val request = object : StringRequest(Method.POST, url2,
-            Response.Listener { response ->
-                val jsonObject = JSONObject(response)
-                val error = jsonObject.getString("kode")
-                if (error.equals("000")) {
-                    Toast.makeText(applicationContext, "Pedido Excluído", Toast.LENGTH_LONG).show()
-                    showDataMhs()
-                    mhsAdapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(applicationContext, "Algo deu errado", Toast.LENGTH_LONG).show()
-                }
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val hm = HashMap<String, String>()
-                //recebendo e enviando valores para o php
-                hm["order_id"] = id
-                return hm
-            }
-        }
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
-    }
-
-    fun updateOrder(id: String, desc: String) {
-        val request = object : StringRequest(Method.POST, url3,
-            Response.Listener { response ->
-                val jsonObject = JSONObject(response)
-                val error = jsonObject.getString("kode")
-                if (error.equals("000")) {
-                    Toast.makeText(applicationContext, "Pedido Alterado", Toast.LENGTH_LONG).show()
-                    showDataMhs()
-                    mhsAdapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(applicationContext, "Algo deu errado", Toast.LENGTH_LONG).show()
-                }
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val hm = HashMap<String, String>()
-                //recebendo e enviando valores para o php
-                hm["order_id"] = id
-                hm.put("order_description", desc)
-                return hm
-            }
-        }
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
-    }
-
-    fun finishOrder(id: String) {
-        val request = object : StringRequest(Method.POST, url4,
-            Response.Listener { response ->
-                val jsonObject = JSONObject(response)
-                val error = jsonObject.getString("kode")
-                if (error.equals("000")) {
-                    Toast.makeText(applicationContext, "Pedido Finalizado", Toast.LENGTH_LONG)
-                        .show()
-                    showDataMhs()
-                    mhsAdapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(applicationContext, "Algo deu errado", Toast.LENGTH_LONG).show()
-                }
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val hm = HashMap<String, String>()
-                //recebendo e enviando valores para o php
-                hm["order_id"] = id
-                return hm
-            }
-        }
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
     }
 
 

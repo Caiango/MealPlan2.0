@@ -3,26 +3,15 @@ package com.example.mealplan2.views
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.mealplan2.R
 import com.example.mealplan2.adapters.HistAdapter
 import com.example.mealplan2.controller.HistoryController
 import com.example.mealplan2.controller.LoginController
 import kotlinx.android.synthetic.main.activity_history.*
-import org.json.JSONArray
-import org.json.JSONObject
-import java.lang.Exception
 
 class HistoryActivity : AppCompatActivity() {
 
