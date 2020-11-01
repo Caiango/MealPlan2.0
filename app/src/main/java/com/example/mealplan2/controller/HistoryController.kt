@@ -9,7 +9,6 @@ import com.android.volley.toolbox.Volley
 import com.example.mealplan2.adapters.HistAdapter
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
 
 class HistoryController {
 

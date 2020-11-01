@@ -19,7 +19,7 @@ class PratosController {
     companion object {
         var getdata = mutableListOf<HashMap<String, String>>()
     }
-    
+
 //    var url = "http://192.168.0.22/php_android/show_pratos.php"
 //    var url2 = "http://192.168.0.22/php_android/get_categories.php"
 //    var url3 = "http://192.168.0.22/php_android/insert_prato.php"
@@ -33,6 +33,7 @@ class PratosController {
     var url4 = "http://192.168.1.2/meal_plan2/delete_prato.php"
     var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
     var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
+    var url7 = "http://192.168.1.2/meal_plan2/insert_category.php"
 
     fun showDataMhs(context: Context, adapter: PratosAdapter) {
         val request = StringRequest(
@@ -152,20 +153,12 @@ class PratosController {
             override fun getParams(): MutableMap<String, String> {
                 val hm = HashMap<String, String>()
 
-                if (cat == "Almoço") {
-                    hm.put("category_id", "1")
-                } else if (cat == "Lanche") {
-                    hm.put("category_id", "2")
-                } else if (cat == "Jantar") {
-                    hm.put("category_id", "3")
-                } else if (cat == "Sobremesa") {
-                    hm.put("category_id", "4")
-                }
-
                 //recebendo e enviando valores para o php
                 hm.put("food_name", nome)
                 hm.put("food_description", desc)
                 hm.put("food_price", valor)
+                hm.put("category_name", cat)
+
                 return hm
             }
         }
@@ -207,20 +200,8 @@ class PratosController {
                 hm.put("food_name", nome)
                 hm.put("food_description", desc)
                 hm.put("food_price", valor)
+                hm.put("category_name", cat)
 
-                if (cat == "Almoço") {
-                    hm.put("cat_id", "1")
-
-                } else if (cat == "Lanche") {
-                    hm.put("cat_id", "2")
-
-                } else if (cat == "Jantar") {
-                    hm.put("cat_id", "3")
-
-                } else if (cat == "Sobremesa") {
-                    hm.put("cat_id", "4")
-
-                }
                 return hm
             }
         }
@@ -256,6 +237,38 @@ class PratosController {
             { error ->
                 Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show()
             })
+        val queue = Volley.newRequestQueue(context)
+        queue.add(request)
+    }
+
+    fun insertCat(
+        nome: String,
+        context: Context,
+        adapter: PratosAdapter
+    ) {
+        val request = object : StringRequest(Method.POST, url7,
+            Response.Listener { response ->
+                val jsonObject = JSONObject(response)
+                val error = jsonObject.getString("kode")
+                if (error.equals("000")) {
+                    Toast.makeText(context, "Categoria Inserida", Toast.LENGTH_LONG).show()
+                    showDataMhs(context, adapter)
+                    adapter.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(context, "Algo deu errado", Toast.LENGTH_LONG).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show()
+            }) {
+            override fun getParams(): MutableMap<String, String> {
+                val hm = HashMap<String, String>()
+
+                //recebendo e enviando valores para o php
+                hm.put("category_name", nome)
+                return hm
+            }
+        }
         val queue = Volley.newRequestQueue(context)
         queue.add(request)
     }

@@ -4,6 +4,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
@@ -18,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_pratos.*
 
 class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
 
-
     var spinnerList: ArrayList<String> = ArrayList()
 
     lateinit var mhsAdapter: PratosAdapter
@@ -29,6 +30,8 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
         setContentView(R.layout.activity_pratos)
 
         mPratosController = PratosController()
+
+        txCatName.text = "Todos"
 
         rv_pratos.layoutManager = LinearLayoutManager(this)
         rv_pratos.setHasFixedSize(true)
@@ -92,6 +95,40 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             }
             dialog.show()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item?.itemId) {
+            R.id.criar_cat -> {
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle("Deseja Adicionar uma Nova Categoria?")
+                val view = LayoutInflater.from(this).inflate(R.layout.category_dialog, null)
+                dialog.setView(view)
+                val nome = view.findViewById<EditText>(R.id.edt_nome_cat)
+
+
+
+                dialog.setPositiveButton("Adicionar") { _: DialogInterface, _: Int ->
+                    var cat = nome.text.toString()
+                    mPratosController.insertCat(cat, this, mhsAdapter)
+                    mPratosController.getCategories(this, spinnerPrato, spinnerList)
+
+                }
+                dialog.setNeutralButton("Cancelar") { _: DialogInterface, i: Int ->
+                    Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
+                }
+                dialog.show()
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onLongItemClick(item: HashMap<String, String>, position: Int) {

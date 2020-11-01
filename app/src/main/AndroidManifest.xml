@@ -19,7 +19,7 @@
         <activity
             android:name=".views.PratosActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/FullScreen" />
+             />
         <activity
             android:name=".views.PedidosActivity"
             android:screenOrientation="portrait"

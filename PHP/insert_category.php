@@ -7,10 +7,11 @@ $DB_SERVER_LOC = "localhost";
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$conn = mysqli_connect($DB_SERVER_LOC, $DB_USER, $DB_PASS, $DB_NAME);
 	$respon = array(); $respon['kode'] = '000';
-	$foods_id = $_POST['food_id'];
+	$nome = $_POST['category_name'];
 	
 
-	$sql = "DELETE FROM foods WHERE foods.food_id = $foods_id";
+	$sql = "INSERT INTO categories(category_name) VALUES(
+	'$nome') ";
 	$result = mysqli_query($conn, $sql);
 	if ($result) {
 		echo json_encode($respon); exit();
