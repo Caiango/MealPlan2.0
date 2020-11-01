@@ -32,8 +32,12 @@ class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListene
     var url = "http://192.168.1.2/meal_plan2/get_all_users.php"
     var url2 = "http://192.168.1.2/meal_plan2/insert_user.php"
     var url3 = "http://192.168.1.2/meal_plan2/delete_user.php"
+    var url4 = "http://192.168.1.2/meal_plan2/get_all_roles.php"
+    var url5 = "http://192.168.1.2/meal_plan2/get_selected_role.php"
 
     lateinit var mhsAdapter: NewLoginAdapter
+
+    var role = ""
 
     var privilegesList: ArrayList<String> = ArrayList()
 
@@ -41,15 +45,8 @@ class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_login)
 
-        privilegesList.add("Administração")
-        privilegesList.add("Cozinha")
-        privilegesList.add("Atendimento")
-
-        var adapterSpinner: ArrayAdapter<String> = ArrayAdapter(
-            this, android.R.layout.simple_spinner_item, privilegesList
-        )
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        newSpinner.adapter = adapterSpinner
+        showDataMhs()
+        getRoles()
 
         imageBackNew.setOnClickListener {
             val intent = Intent(this, LoggedActivity::class.java)
@@ -61,7 +58,7 @@ class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListene
         mhsAdapter = NewLoginAdapter(getdata, this)
         rvNewUsers.adapter = mhsAdapter
 
-        showDataMhs()
+
 
         newUser.setOnClickListener {
             var nome = edtNewUser.text.toString().trim()
@@ -70,27 +67,21 @@ class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListene
 
             val textSpinner = newSpinner.selectedItem.toString()
 
-            var role_id = ""
+            selectedRole(textSpinner)
 
-            if (textSpinner == "Administração") {
-                role_id = "1"
-            } else if (textSpinner == "Cozinha") {
-                role_id = "2"
-            } else {
-                role_id = "3"
+            if (role.isNotBlank()) {
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle("Confirma os Dados?")
+                dialog.setMessage("Nome: $nome \nCPF: $cpf\nSenha: $senha")
+                dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->
+                    insertUser(nome, cpf, senha, role)
+                }
+                dialog.setNegativeButton("Cancelar") { _: DialogInterface, i: Int ->
+                    Toast.makeText(applicationContext, "Cancelado", Toast.LENGTH_LONG)
+                        .show()
+                }
+                dialog.show()
             }
-
-            val dialog = AlertDialog.Builder(this)
-            dialog.setTitle("Confirma os Dados?")
-            dialog.setMessage("Nome: $nome \nCPF: $cpf\nSenha: $senha")
-            dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->
-                insertUser(nome, cpf, senha, role_id)
-            }
-            dialog.setNegativeButton("Cancelar") { _: DialogInterface, i: Int ->
-                Toast.makeText(applicationContext, "Cancelado", Toast.LENGTH_LONG)
-                    .show()
-            }
-            dialog.show()
         }
 
 
@@ -114,6 +105,8 @@ class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListene
 
                         getdata.add(mhs)
                     }
+
+
                 } catch (e: Exception) {
                     Toast.makeText(
                         applicationContext,
@@ -205,6 +198,76 @@ class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListene
                 .show()
         }
         dialog.show()
+    }
+
+    fun getRoles() {
+        val request = StringRequest(
+            Request.Method.POST, url4,
+            { response ->
+                try {
+                    val jsonArray = JSONArray(response)
+
+                    for (x in 0..(jsonArray.length() - 1)) {
+                        val jsonObject = jsonArray.getJSONObject(x)
+
+                        privilegesList.add(jsonObject.getString("role_name"))
+
+
+                    }
+                    var adapterSpinner: ArrayAdapter<String> = ArrayAdapter(
+                        this, android.R.layout.simple_spinner_item, privilegesList
+                    )
+                    adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    newSpinner.adapter = adapterSpinner
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Não há Usuários Cadastrados",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                mhsAdapter.notifyDataSetChanged()
+            },
+            { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
+            })
+        val queue = Volley.newRequestQueue(this)
+        queue.add(request)
+    }
+
+    fun selectedRole(roleName: String) {
+
+        val request = object : StringRequest(Method.POST, url5,
+            Response.Listener { response ->
+
+                try {
+                    val jsonArray = JSONArray(response)
+                    for (x in 0..(jsonArray.length() - 1)) {
+                        val jsonObject = jsonArray.getJSONObject(x)
+                        role = jsonObject.getString("role_id")
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Não há Usuários Cadastrados",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
+            }) {
+            override fun getParams(): MutableMap<String, String> {
+                val hm = HashMap<String, String>()
+                //recebendo e enviando valores para o php
+                hm["role_name"] = roleName
+                return hm
+            }
+        }
+        val queue = Volley.newRequestQueue(this)
+        queue.add(request)
+
     }
 
 }
