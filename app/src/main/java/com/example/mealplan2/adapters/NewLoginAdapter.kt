@@ -4,14 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.mealplan2.R
-import kotlinx.android.synthetic.main.activity_pratos.*
-import org.json.JSONObject
 
 class NewLoginAdapter(
     val dataList: List<HashMap<String, String>>,

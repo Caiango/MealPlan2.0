@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_pratos.*
 
 class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
 
+
     var spinnerList: ArrayList<String> = ArrayList()
 
     lateinit var mhsAdapter: PratosAdapter
@@ -74,6 +75,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             )
             adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapterSpinner
+
 
             dialog.setPositiveButton("Adicionar") { _: DialogInterface, _: Int ->
                 mPratosController.insertFood(

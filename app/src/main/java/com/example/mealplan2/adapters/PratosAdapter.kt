@@ -9,7 +9,7 @@ import com.example.mealplan2.R
 
 class PratosAdapter(
     val dataList: List<HashMap<String, String>>,
-    var longClickListener: PratosAdapter.onLongClickListener
+    var longClickListener: onLongClickListener
 ) :
     RecyclerView.Adapter<PratosAdapter.HolderData>() {
 
