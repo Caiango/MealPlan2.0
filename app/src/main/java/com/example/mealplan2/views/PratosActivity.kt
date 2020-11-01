@@ -11,49 +11,31 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.mealplan2.R
 import com.example.mealplan2.adapters.PratosAdapter
+import com.example.mealplan2.controller.PratosController
 import kotlinx.android.synthetic.main.activity_pratos.*
-import org.json.JSONArray
-import org.json.JSONObject
 
 class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
-    var getdata = mutableListOf<HashMap<String, String>>()
-//    var url = "http://192.168.0.22/php_android/show_pratos.php"
-//    var url2 = "http://192.168.0.22/php_android/get_categories.php"
-//    var url3 = "http://192.168.0.22/php_android/insert_prato.php"
-//    var url4 = "http://192.168.0.22/php_android/delete_prato.php"
-//    var url5 = "http://192.168.0.22/php_android/update_prato.php"
-//    var url6 = "http://192.168.0.22/php_android/select_by_category.php"
-
-    var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
-    var url2 = "http://192.168.1.2/meal_plan2/get_categories.php"
-    var url3 = "http://192.168.1.2/meal_plan2/insert_prato.php"
-    var url4 = "http://192.168.1.2/meal_plan2/delete_prato.php"
-    var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
-    var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
-
 
     var spinnerList: ArrayList<String> = ArrayList()
 
     lateinit var mhsAdapter: PratosAdapter
+    lateinit var mPratosController: PratosController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pratos)
 
+        mPratosController = PratosController()
+
         rv_pratos.layoutManager = LinearLayoutManager(this)
         rv_pratos.setHasFixedSize(true)
-        mhsAdapter = PratosAdapter(getdata, this)
+        mhsAdapter = PratosAdapter(PratosController.getdata, this)
         rv_pratos.adapter = mhsAdapter
 
-        getCategories()
-        showDataMhs()
-
+        mPratosController.getCategories(this, spinnerPrato, spinnerList)
+        mPratosController.showDataMhs(this, mhsAdapter)
 
         var adapterSpinner: ArrayAdapter<String> = ArrayAdapter(
             this, android.R.layout.simple_spinner_item, spinnerList
@@ -70,7 +52,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
         imageCat.setOnClickListener {
             val textSpinner = spinnerPrato.selectedItem.toString()
             if (textSpinner.isNotEmpty()) {
-                getPratosByCat(textSpinner)
+                mPratosController.getPratosByCat(textSpinner, this, mhsAdapter)
                 txCatName.text = textSpinner
             }
         }
@@ -93,15 +75,14 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapterSpinner
 
-
             dialog.setPositiveButton("Adicionar") { _: DialogInterface, _: Int ->
-//                Toast.makeText(applicationContext, "Prato Adicionado", Toast.LENGTH_LONG).show()
-                insertFood(
+                mPratosController.insertFood(
                     prato.text.toString().trim(),
                     desc.text.toString().trim(),
                     valor.text.toString().trim(),
-                    spinner.selectedItem.toString()
-
+                    spinner.selectedItem.toString(),
+                    this,
+                    mhsAdapter
                 )
             }
             dialog.setNegativeButton("Cancelar") { _: DialogInterface, i: Int ->
@@ -109,39 +90,6 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             }
             dialog.show()
         }
-    }
-
-    fun showDataMhs() {
-        val request = StringRequest(
-            Request.Method.POST, url,
-            { response ->
-                getdata.clear()
-                try {
-                    val jsonArray = JSONArray(response)
-                    for (x in 0..(jsonArray.length() - 1)) {
-                        val jsonObject = jsonArray.getJSONObject(x)
-                        var mhs = HashMap<String, String>()
-                        mhs.put("food_name", jsonObject.getString("food_name"))
-                        mhs.put("food_description", jsonObject.getString("food_description"))
-                        mhs.put("food_price", jsonObject.getString("food_price"))
-                        mhs.put("food_id", jsonObject.getString("food_id"))
-                        getdata.add(mhs)
-                        mhsAdapter.notifyDataSetChanged()
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(
-                        applicationContext,
-                        "Não há Pratos Cadastrados",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                mhsAdapter.notifyDataSetChanged()
-            },
-            { error ->
-                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
-            })
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
     }
 
     override fun onLongItemClick(item: HashMap<String, String>, position: Int) {
@@ -169,18 +117,21 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
         valor.setText(item["food_price"])
         dialog.setPositiveButton("Alterar") { _: DialogInterface, _: Int ->
             if (id != null) {
-                updateFood(
+                mPratosController.updateFood(
                     id, prato.text.toString().trim(),
                     desc.text.toString().trim(),
                     valor.text.toString().trim(),
-                    spinnerUpdate.selectedItem.toString()
+                    spinnerUpdate.selectedItem.toString(),
+                    this,
+                    txCatName,
+                    mhsAdapter
                 )
             }
 
         }
         dialog.setNegativeButton("Excluir") { _: DialogInterface, i: Int ->
             if (id != null) {
-                deleteFood(id)
+                mPratosController.deleteFood(id, this, mhsAdapter)
             }
 
         }
@@ -190,179 +141,4 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
         dialog.show()
     }
 
-    fun getCategories() {
-        spinnerList.clear()
-        val request = StringRequest(
-            Request.Method.POST, url2,
-            { response ->
-                getdata.clear()
-                val jsonArray = JSONArray(response)
-                for (x in 0..(jsonArray.length() - 1)) {
-                    val jsonObject = jsonArray.getJSONObject(x)
-
-                    //adicionando as categorias obtidas no banco dentro de uma lista
-                    spinnerList.add(jsonObject.getString("category_name"))
-
-
-                }
-                //criando variável adapter que vai receber os dados da lista
-                var adapterSpinner: ArrayAdapter<String> = ArrayAdapter(
-                    this, android.R.layout.simple_spinner_item, spinnerList
-                )
-                adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-                //setando adapter criado no meu spinner
-                spinnerPrato.adapter = adapterSpinner
-
-            },
-            { error ->
-                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
-            })
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
-    }
-
-    fun insertFood(nome: String, desc: String, valor: String, cat: String) {
-        val request = object : StringRequest(Method.POST, url3,
-            Response.Listener { response ->
-                val jsonObject = JSONObject(response)
-                val error = jsonObject.getString("kode")
-                if (error.equals("000")) {
-                    Toast.makeText(applicationContext, "Prato Inserido", Toast.LENGTH_LONG).show()
-                    showDataMhs()
-                    mhsAdapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(applicationContext, "Algo deu errado", Toast.LENGTH_LONG).show()
-                }
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val hm = HashMap<String, String>()
-
-                if (cat == "Almoço") {
-                    hm.put("category_id", "1")
-                } else if (cat == "Lanche") {
-                    hm.put("category_id", "2")
-                } else if (cat == "Jantar") {
-                    hm.put("category_id", "3")
-                } else if (cat == "Sobremesa") {
-                    hm.put("category_id", "4")
-                }
-
-                //recebendo e enviando valores para o php
-                hm.put("food_name", nome)
-                hm.put("food_description", desc)
-                hm.put("food_price", valor)
-                return hm
-            }
-        }
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
-    }
-
-    fun deleteFood(id: String) {
-        val request = object : StringRequest(Method.POST, url4,
-            Response.Listener { response ->
-                val jsonObject = JSONObject(response)
-                val error = jsonObject.getString("kode")
-                if (error.equals("000")) {
-                    Toast.makeText(applicationContext, "Prato Excluído", Toast.LENGTH_LONG).show()
-                    showDataMhs()
-                    mhsAdapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(applicationContext, "Algo deu errado", Toast.LENGTH_LONG).show()
-                }
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val hm = HashMap<String, String>()
-                //recebendo e enviando valores para o php
-                hm["food_id"] = id
-                return hm
-            }
-        }
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
-    }
-
-    fun updateFood(id: String, nome: String, desc: String, valor: String, cat: String) {
-        val request = object : StringRequest(Method.POST, url5,
-            Response.Listener { response ->
-                val jsonObject = JSONObject(response)
-                val error = jsonObject.getString("kode")
-                if (error.equals("000")) {
-                    Toast.makeText(applicationContext, "Prato Alterado", Toast.LENGTH_LONG).show()
-                    showDataMhs()
-                    mhsAdapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(applicationContext, "Algo deu errado", Toast.LENGTH_LONG).show()
-                }
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val hm = HashMap<String, String>()
-
-                //recebendo e enviando valores para o php
-                hm["food_id"] = id
-                hm.put("food_name", nome)
-                hm.put("food_description", desc)
-                hm.put("food_price", valor)
-
-                if (cat == "Almoço") {
-                    hm.put("cat_id", "1")
-
-                } else if (cat == "Lanche") {
-                    hm.put("cat_id", "2")
-
-                } else if (cat == "Jantar") {
-                    hm.put("cat_id", "3")
-
-                } else if (cat == "Sobremesa") {
-                    hm.put("cat_id", "4")
-
-                }
-                return hm
-            }
-        }
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
-    }
-
-    fun getPratosByCat(cat: String) {
-        val request = object : StringRequest(Method.POST, url6,
-            Response.Listener { response ->
-                getdata.clear()
-
-                val jsonArray = JSONArray(response)
-                for (x in 0..(jsonArray.length() - 1)) {
-                    val jsonObject = jsonArray.getJSONObject(x)
-                    var mhs = HashMap<String, String>()
-                    mhs.put("food_name", jsonObject.getString("food_name"))
-                    mhs.put("food_description", jsonObject.getString("food_description"))
-                    mhs.put("food_price", jsonObject.getString("food_price"))
-                    mhs.put("food_id", jsonObject.getString("food_id"))
-                    getdata.add(mhs)
-                }
-                mhsAdapter.notifyDataSetChanged()
-
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_LONG).show()
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val hm = HashMap<String, String>()
-                //recebendo e enviando valores para o php
-                hm["category_name"] = cat
-                return hm
-            }
-        }
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
-    }
 }
