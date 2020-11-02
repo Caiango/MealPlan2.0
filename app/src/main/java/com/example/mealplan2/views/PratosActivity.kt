@@ -7,10 +7,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -131,7 +128,31 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
             }
 
             R.id.delete_cat ->{
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle("Deseja Excluir Alguma Categoria?")
+                dialog.setMessage("Selecione a Categoria")
+                val view = LayoutInflater.from(this).inflate(R.layout.del_cat_dialog, null)
+                dialog.setView(view)
+                val spinnerDel = view.findViewById<Spinner>(R.id.spinnerDelCat)
 
+                var adapterSpinner: ArrayAdapter<String> = ArrayAdapter(
+                    this, android.R.layout.simple_spinner_item, spinnerList
+                )
+                adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerDel.adapter = adapterSpinner
+
+                dialog.setPositiveButton("Excluir") { _: DialogInterface, _: Int ->
+                    var catName = spinnerDel.selectedItem.toString()
+                    mPratosController.deleteCat(catName, this)
+
+                    Handler().postDelayed({
+                        mPratosController.getCategories(this, spinnerPrato, spinnerList)
+                    }, 2000)
+                }
+                dialog.setNeutralButton("Cancelar") { _: DialogInterface, i: Int ->
+                    Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
+                }
+                dialog.show()
             }
         }
 

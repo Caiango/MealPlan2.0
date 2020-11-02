@@ -12,7 +12,6 @@ import com.example.mealplan2.R
 import com.example.mealplan2.adapters.NewLoginAdapter
 import com.example.mealplan2.controller.NewLoginController
 import kotlinx.android.synthetic.main.activity_new_login.*
-import kotlinx.android.synthetic.main.activity_pratos.*
 
 class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListener {
 

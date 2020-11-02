@@ -35,6 +35,7 @@ class PratosController {
     var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
     var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
     var url7 = "http://192.168.1.2/meal_plan2/insert_category.php"
+    var url8 = "http://192.168.1.2/meal_plan2/delete_category.php"
 
     fun showDataMhs(context: Context, adapter: PratosAdapter) {
         val request = StringRequest(
@@ -267,6 +268,31 @@ class PratosController {
 
                 //recebendo e enviando valores para o php
                 hm.put("category_name", nome)
+                return hm
+            }
+        }
+        val queue = Volley.newRequestQueue(context)
+        queue.add(request)
+    }
+
+    fun deleteCat(catName: String, context: Context) {
+        val request = object : StringRequest(Method.POST, url8,
+            Response.Listener { response ->
+                val jsonObject = JSONObject(response)
+                val error = jsonObject.getString("kode")
+                if (error.equals("000")) {
+                    Toast.makeText(context, "Categoria Excluída", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "Algo deu errado", Toast.LENGTH_LONG).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show()
+            }) {
+            override fun getParams(): MutableMap<String, String> {
+                val hm = HashMap<String, String>()
+                //recebendo e enviando valores para o php
+                hm["category_name"] = catName
                 return hm
             }
         }
