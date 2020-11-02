@@ -3,6 +3,7 @@ package com.example.mealplan2.views
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -113,18 +114,24 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
                 dialog.setView(view)
                 val nome = view.findViewById<EditText>(R.id.edt_nome_cat)
 
-
-
                 dialog.setPositiveButton("Adicionar") { _: DialogInterface, _: Int ->
                     var cat = nome.text.toString()
                     mPratosController.insertCat(cat, this, mhsAdapter)
-                    mPratosController.getCategories(this, spinnerPrato, spinnerList)
+
+                    Handler().postDelayed({
+                        mPratosController.getCategories(this, spinnerPrato, spinnerList)
+                    }, 2000)
 
                 }
                 dialog.setNeutralButton("Cancelar") { _: DialogInterface, i: Int ->
                     Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
                 }
                 dialog.show()
+
+            }
+
+            R.id.delete_cat ->{
+
             }
         }
 
