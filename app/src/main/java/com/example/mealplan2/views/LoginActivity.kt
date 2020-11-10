@@ -16,6 +16,7 @@ class LoginActivity : AppCompatActivity() {
 
         mLoginController = LoginController()
 
+
         btnLogin.setOnClickListener {
             if (cpf.text.isEmpty() || password.text.isEmpty()) {
                 cpf.error = "Preencha os valores"

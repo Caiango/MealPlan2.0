@@ -103,7 +103,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.criar_cat -> {
                 val dialog = AlertDialog.Builder(this)
                 dialog.setTitle("Deseja Adicionar uma Nova Categoria?")
@@ -127,7 +127,7 @@ class PratosActivity : AppCompatActivity(), PratosAdapter.onLongClickListener {
 
             }
 
-            R.id.delete_cat ->{
+            R.id.delete_cat -> {
                 val dialog = AlertDialog.Builder(this)
                 dialog.setTitle("Deseja Excluir Alguma Categoria?")
                 dialog.setMessage("Selecione a Categoria")

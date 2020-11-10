@@ -3,6 +3,8 @@
     package="com.example.mealplan2">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
         android:allowBackup="true"
@@ -12,14 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <receiver
+            android:name="com.example.mealplan2.controller.Alarm"
+            android:process=":remote" />
+
         <activity
             android:name=".views.NewLoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreen" />
         <activity
             android:name=".views.PratosActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.PedidosActivity"
             android:screenOrientation="portrait"

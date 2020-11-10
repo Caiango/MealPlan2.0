@@ -27,6 +27,7 @@ class PratosController {
 //    var url5 = "http://192.168.0.22/php_android/update_prato.php"
 //    var url6 = "http://192.168.0.22/php_android/select_by_category.php"
 //    var url7 = "http://192.168.1.2/php_android/insert_category.php"
+//    var url8 = "http://192.168.1.2/php_android/delete_category.php"
 
     var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
     var url2 = "http://192.168.1.2/meal_plan2/get_categories.php"

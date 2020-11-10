@@ -19,7 +19,7 @@ class HistAdapter(val dataList: List<HashMap<String, String>>) :
 
     override fun onBindViewHolder(holder: HolderData, position: Int) {
         val data = dataList[position]
-        holder.txMesa.setText("Mesa " + data["table_number"])
+        holder.txMesa.setText("Mesa " + data["table_number"] + " | " + data["client_name"])
         holder.txDesc.setText(data["order_description"])
         holder.txPrice.setText("R$ " + data["order_price"])
         holder.txPrice.setTextColor(Color.RED)

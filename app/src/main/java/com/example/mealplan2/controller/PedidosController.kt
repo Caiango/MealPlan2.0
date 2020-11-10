@@ -7,6 +7,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.mealplan2.adapters.PedidosAdapter
+import com.example.mealplan2.views.PedidosActivity
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -43,6 +44,7 @@ class PedidosController {
                         mhs.put("order_date", jsonObject.getString("order_date"))
                         mhs.put("order_time", jsonObject.getString("order_time"))
                         mhs.put("order_id", jsonObject.getString("order_id"))
+                        mhs.put("client_name", jsonObject.getString("client_name"))
                         getdata.add(mhs)
                     }
                 } catch (e: Exception) {

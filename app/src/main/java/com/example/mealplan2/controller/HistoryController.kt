@@ -38,6 +38,7 @@ class HistoryController {
                         mhs.put("order_price", jsonObject.getString("order_price"))
                         mhs.put("order_date", jsonObject.getString("order_date"))
                         mhs.put("order_time", jsonObject.getString("order_time"))
+                        mhs.put("client_name", jsonObject.getString("client_name"))
                         getdata.add(mhs)
                     }
                 } catch (e: Exception) {

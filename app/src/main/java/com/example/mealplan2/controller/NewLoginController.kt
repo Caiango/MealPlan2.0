@@ -47,7 +47,7 @@ class NewLoginController {
                         mhs.put("user_name", jsonObject.getString("user_name"))
                         mhs.put("user_cpf", jsonObject.getString("user_cpf"))
                         mhs.put("role_name", jsonObject.getString("role_name"))
-                        mhs.put("user_id", jsonObject.getString("user_id"))
+                        mhs["user_id"] = jsonObject.getString("user_id")
 
                         getdata.add(mhs)
                         adapter.notifyDataSetChanged()

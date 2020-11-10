@@ -17,7 +17,11 @@ import kotlinx.android.synthetic.main.activity_pedidos.*
 
 class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener {
 
-    lateinit var mhsAdapter: PedidosAdapter
+    companion object {
+        lateinit var mhsAdapter: PedidosAdapter
+    }
+
+
     lateinit var mPedidosController: PedidosController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +42,10 @@ class PedidosActivity : AppCompatActivity(), PedidosAdapter.onLongClickListener 
             startActivity(intent)
         }
 
+        floatUpdate.setOnClickListener { mPedidosController.showDataMhs(this, mhsAdapter) }
+
     }
+
 
     override fun onLongItemClick(item: HashMap<String, String>, position: Int) {
         val dialog = AlertDialog.Builder(this)
