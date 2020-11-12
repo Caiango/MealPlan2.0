@@ -7,13 +7,10 @@ $DB_SERVER_LOC = "localhost";
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$conn = mysqli_connect($DB_SERVER_LOC, $DB_USER, $DB_PASS, $DB_NAME);
 	$respon = array(); $respon['kode'] = '000';
-	$nome = $_POST['user_name'];
-	$cpf = $_POST['user_cpf'];
-	$senha = $_POST['user_pass'];
-	$role_id = $_POST['role_id'];
+	$cat_name = $_POST['category_name'];
+	
 
-
-	$sql = "INSERT INTO users(user_name, user_cpf, user_password, role_id) VALUES('$nome', '$cpf', '$senha', '$role_id') ";
+	$sql = "DELETE FROM categories WHERE categories.category_name = '$cat_name'";
 	$result = mysqli_query($conn, $sql);
 	if ($result) {
 		echo json_encode($respon); exit();

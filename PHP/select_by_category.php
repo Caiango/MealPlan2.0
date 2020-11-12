@@ -24,9 +24,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		$sel_id = $data_mhs1[0]['category_id'];
 		if ($category_name == "Todos") {
-			$sql2 = "SELECT * FROM foods";
+			$sql2 = "SELECT food_id, food_name, food_description, category_id, food_price, concat('http://192.168.1.2/meal_plan2/photos/', photos) as url FROM foods";
 		} else {
-			$sql2 = "SELECT * FROM foods WHERE foods.category_id = '$sel_id'";
+			
+			$sql2 = "SELECT food_id, food_name, food_description, category_id, food_price, concat('http://192.168.1.2/meal_plan2/photos/', photos) as url FROM foods WHERE foods.category_id = '$sel_id'";
 		}
 
 		

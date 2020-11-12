@@ -10,6 +10,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$nome = $_POST['food_name'];
 	$desc = $_POST['food_description'];
 	$valor = $_POST['food_price'];
+	$url = $_POST['url'];
+
 	
 	$category_name = $_POST['category_name'];
 	$sql = "SELECT categories.category_id FROM categories WHERE categories.category_name = '$category_name'";
@@ -27,8 +29,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$sel_id = $data_mhs1[0]['category_id'];
 
 
-		$sql2 = "INSERT INTO foods(food_name, food_description, food_price, category_id) VALUES(
-			'$nome', '$desc', '$valor', '$sel_id') ";
+		$sql2 = "INSERT INTO foods(food_name, food_description, food_price, category_id, photos) VALUES(
+			'$nome', '$desc', '$valor', '$sel_id', '$url') ";
 				$result2 = mysqli_query($conn, $sql2);
 					if ($result2) {
 					echo json_encode($respon); exit();
