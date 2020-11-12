@@ -52,6 +52,7 @@ class PratosController {
                         mhs.put("food_description", jsonObject.getString("food_description"))
                         mhs.put("food_price", jsonObject.getString("food_price"))
                         mhs.put("food_id", jsonObject.getString("food_id"))
+                        mhs.put("url",jsonObject.getString("url"))
                         getdata.add(mhs)
                         adapter.notifyDataSetChanged()
                     }
@@ -111,6 +112,7 @@ class PratosController {
                     mhs.put("food_description", jsonObject.getString("food_description"))
                     mhs.put("food_price", jsonObject.getString("food_price"))
                     mhs.put("food_id", jsonObject.getString("food_id"))
+                    mhs.put("url",jsonObject.getString("url"))
                     getdata.add(mhs)
                 }
                 adapter.notifyDataSetChanged()
@@ -161,6 +163,7 @@ class PratosController {
                 hm.put("food_description", desc)
                 hm.put("food_price", valor)
                 hm.put("category_name", cat)
+                hm.put("url", "pudim.jpg")
 
                 return hm
             }

@@ -1,11 +1,15 @@
 package com.example.mealplan2.adapters
 
+import android.media.Image
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplan2.R
+import com.squareup.picasso.Picasso
 
 class PratosAdapter(
     val dataList: List<HashMap<String, String>>,
@@ -24,6 +28,10 @@ class PratosAdapter(
         holder.txPrato.setText(data["food_name"])
         holder.txDesc.setText(data["food_description"])
         holder.txValor.setText("R$ " + data["food_price"])
+        if (!data["url"].equals("")) {
+            Picasso.get().load(data["url"]).into(holder.img)
+        }
+
 
         holder.initializeLong(dataList[position], longClickListener)
 
@@ -37,6 +45,7 @@ class PratosAdapter(
         val txPrato = v.findViewById<TextView>(R.id.txPrato)
         val txDesc = v.findViewById<TextView>(R.id.txDescPrato)
         val txValor = v.findViewById<TextView>(R.id.txValorPrato)
+        val img = v.findViewById<ImageView>(R.id.imgPrato)
 
         fun initializeLong(
             item: HashMap<String, String>,

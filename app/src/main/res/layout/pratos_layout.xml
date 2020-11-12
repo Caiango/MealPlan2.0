@@ -51,8 +51,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/txValorPrato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/txPrato"
-        app:srcCompat="@drawable/pratos" />
+        app:layout_constraintTop_toTopOf="@+id/txPrato" />
 
     <View
         android:layout_width="match_parent"
