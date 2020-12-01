@@ -18,9 +18,9 @@ class LoginController {
         private var currentPass: String = ""
     }
 
-    var url = "http://192.168.1.2/meal_plan2/get_current_user.php"
+//    var url = "http://192.168.1.7/meal_plan2/get_current_user.php"
 
-    //    var url = "http://192.168.0.22/php_android/get_current_user.php"
+        var url = "25.108.237.40/php_android/get_current_user.php"
 
     fun getData(cpf: String, pass: String, context: Context) {
         val request = object : StringRequest(

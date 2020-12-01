@@ -20,23 +20,23 @@ class PratosController {
         var getdata = mutableListOf<HashMap<String, String>>()
     }
 
-//    var url = "http://192.168.0.22/php_android/show_pratos.php"
-//    var url2 = "http://192.168.0.22/php_android/get_categories.php"
-//    var url3 = "http://192.168.0.22/php_android/insert_prato.php"
-//    var url4 = "http://192.168.0.22/php_android/delete_prato.php"
-//    var url5 = "http://192.168.0.22/php_android/update_prato.php"
-//    var url6 = "http://192.168.0.22/php_android/select_by_category.php"
-//    var url7 = "http://192.168.1.2/php_android/insert_category.php"
-//    var url8 = "http://192.168.1.2/php_android/delete_category.php"
+    var url = "http://25.108.237.40/php_android/show_pratos.php"
+    var url2 = "http://25.108.237.40/php_android/get_categories.php"
+    var url3 = "http://25.108.237.40/php_android/insert_prato.php"
+    var url4 = "http://25.108.237.40/php_android/delete_prato.php"
+    var url5 = "http://25.108.237.40/php_android/update_prato.php"
+    var url6 = "http://25.108.237.40/php_android/select_by_category.php"
+    var url7 = "http://25.108.237.40/php_android/insert_category.php"
+    var url8 = "http://25.108.237.40/php_android/delete_category.php"
 
-    var url = "http://192.168.1.2/meal_plan2/show_pratos.php"
-    var url2 = "http://192.168.1.2/meal_plan2/get_categories.php"
-    var url3 = "http://192.168.1.2/meal_plan2/insert_prato.php"
-    var url4 = "http://192.168.1.2/meal_plan2/delete_prato.php"
-    var url5 = "http://192.168.1.2/meal_plan2/update_prato.php"
-    var url6 = "http://192.168.1.2/meal_plan2/select_by_category.php"
-    var url7 = "http://192.168.1.2/meal_plan2/insert_category.php"
-    var url8 = "http://192.168.1.2/meal_plan2/delete_category.php"
+//    var url = "http://192.168.1.7/meal_plan2/show_pratos.php"
+//    var url2 = "http://192.168.1.7/meal_plan2/get_categories.php"
+//    var url3 = "http://192.168.1.7/meal_plan2/insert_prato.php"
+//    var url4 = "http://192.168.1.7/meal_plan2/delete_prato.php"
+//    var url5 = "http://192.168.1.7/meal_plan2/update_prato.php"
+//    var url6 = "http://192.168.1.7/meal_plan2/select_by_category.php"
+//    var url7 = "http://192.168.1.7/meal_plan2/insert_category.php"
+//    var url8 = "http://192.168.1.7/meal_plan2/delete_category.php"
 
     fun showDataMhs(context: Context, adapter: PratosAdapter) {
         val request = StringRequest(
@@ -52,7 +52,7 @@ class PratosController {
                         mhs.put("food_description", jsonObject.getString("food_description"))
                         mhs.put("food_price", jsonObject.getString("food_price"))
                         mhs.put("food_id", jsonObject.getString("food_id"))
-                        mhs.put("url",jsonObject.getString("url"))
+                        mhs.put("url", jsonObject.getString("url"))
                         getdata.add(mhs)
                         adapter.notifyDataSetChanged()
                     }
@@ -112,7 +112,7 @@ class PratosController {
                     mhs.put("food_description", jsonObject.getString("food_description"))
                     mhs.put("food_price", jsonObject.getString("food_price"))
                     mhs.put("food_id", jsonObject.getString("food_id"))
-                    mhs.put("url",jsonObject.getString("url"))
+                    mhs.put("url", jsonObject.getString("url"))
                     getdata.add(mhs)
                 }
                 adapter.notifyDataSetChanged()
@@ -163,7 +163,7 @@ class PratosController {
                 hm.put("food_description", desc)
                 hm.put("food_price", valor)
                 hm.put("category_name", cat)
-                hm.put("url", "pudim.jpg")
+                hm.put("url", "figado.jpg")
 
                 return hm
             }

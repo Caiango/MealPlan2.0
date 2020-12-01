@@ -21,17 +21,17 @@ class NewLoginController {
         var role = ""
     }
 
-//    var url = "http://192.168.0.22/php_android/get_all_users.php"
-//    var url2 = "http://192.168.0.22/php_android/insert_user.php"
-//    var url3 = "http://192.168.0.22/php_android/delete_user.php"
-//    var url4 = "http://192.168.1.2/php_android/get_all_roles.php"
-//    var url5 = "http://192.168.1.2/php_android/get_selected_role.php"
+    var url = "http://25.108.237.40/php_android/get_all_users.php"
+    var url2 = "http://25.108.237.40/php_android/insert_user.php"
+    var url3 = "http://25.108.237.40/php_android/delete_user.php"
+    var url4 = "http://25.108.237.40/php_android/get_all_roles.php"
+    var url5 = "http://25.108.237.40/php_android/get_selected_role.php"
 
-    var url = "http://192.168.1.2/meal_plan2/get_all_users.php"
-    var url2 = "http://192.168.1.2/meal_plan2/insert_user.php"
-    var url3 = "http://192.168.1.2/meal_plan2/delete_user.php"
-    var url4 = "http://192.168.1.2/meal_plan2/get_all_roles.php"
-    var url5 = "http://192.168.1.2/meal_plan2/get_selected_role.php"
+//    var url = "http://192.168.1.7/meal_plan2/get_all_users.php"
+//    var url2 = "http://192.168.1.7/meal_plan2/insert_user.php"
+//    var url3 = "http://192.168.1.7/meal_plan2/delete_user.php"
+//    var url4 = "http://192.168.1.7/meal_plan2/get_all_roles.php"
+//    var url5 = "http://192.168.1.7/meal_plan2/get_selected_role.php"
 
     fun showDataMhs(context: Context, adapter: NewLoginAdapter) {
         val request = StringRequest(

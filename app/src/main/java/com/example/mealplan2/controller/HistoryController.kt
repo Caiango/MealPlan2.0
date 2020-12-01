@@ -16,11 +16,11 @@ class HistoryController {
         var getdata = mutableListOf<HashMap<String, String>>()
     }
 
-//    var url = "http://192.168.0.22/php_android/show_history.php"
-//    var url2 = "http://192.168.0.22/php_android/delete_all_hist.php"
+    var url = "http://25.108.237.40/php_android/show_history.php"
+    var url2 = "http://25.108.237.40/php_android/delete_all_hist.php"
 
-    var url = "http://192.168.1.2/meal_plan2/show_history.php"
-    var url2 = "http://192.168.1.2/meal_plan2/delete_all_hist.php"
+//    var url = "http://192.168.1.7/meal_plan2/show_history.php"
+//    var url2 = "http://192.168.1.7/meal_plan2/delete_all_hist.php"
 
     fun showDataMhs(context: Context, adapter: HistAdapter) {
         val request = StringRequest(

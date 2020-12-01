@@ -17,15 +17,15 @@ class PedidosController {
         var getdata = mutableListOf<HashMap<String, String>>()
     }
 
-    //    var url = "http://192.168.0.22/php_android/show_orders.php"
-    //    var url2 = "http://192.168.0.22/php_android/delete_order.php"
-    //    var url3 = "http://192.168.0.22/php_android/update_order.php"
-    //    var url4 = "http://192.168.0.22/php_android/finish_order.php"
+        var url = "http://25.108.237.40/php_android/show_orders.php"
+        var url2 = "http://25.108.237.40/php_android/delete_order.php"
+        var url3 = "http://25.108.237.40/php_android/update_order.php"
+        var url4 = "http://25.108.237.40/php_android/finish_order.php"
 
-    var url = "http://192.168.1.2/meal_plan2/show_orders.php"
-    var url2 = "http://192.168.1.2/meal_plan2/delete_order.php"
-    var url3 = "http://192.168.1.2/meal_plan2/update_order.php"
-    var url4 = "http://192.168.1.2/meal_plan2/finish_order.php"
+//    var url = "http://192.168.1.7/meal_plan2/show_orders.php"
+//    var url2 = "http://192.168.1.7/meal_plan2/delete_order.php"
+//    var url3 = "http://192.168.1.7/meal_plan2/update_order.php"
+//    var url4 = "http://192.168.1.7/meal_plan2/finish_order.php"
 
     fun showDataMhs(context: Context, adapter: PedidosAdapter) {
         val request = StringRequest(
