@@ -65,22 +65,15 @@ class NewLoginActivity : AppCompatActivity(), NewLoginAdapter.onLongClickListene
                             .show()
                     }
                     dialog.show()
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Por favor Selecione um Privilégio",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-            }, 1000)
 
-            if (roleAct.isNotBlank()) {
-                val dialog = AlertDialog.Builder(this)
-                dialog.setTitle("Confirma os Dados?")
-                dialog.setMessage("Nome: $nome \nCPF: $cpf\nSenha: $senha")
-                dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->
-                    mNewLoginController.insertUser(nome, cpf, senha, roleAct, this, mhsAdapter)
-                }
-                dialog.setNegativeButton("Cancelar") { _: DialogInterface, i: Int ->
-                    Toast.makeText(applicationContext, "Cancelado", Toast.LENGTH_LONG)
-                        .show()
-                }
-                dialog.show()
-            }
+            }, 1000)
         }
 
     }
